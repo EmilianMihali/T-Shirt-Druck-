@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Shop - Apex Stylebreaker</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    max-width: 960px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+  h1 {
+    text-align: center;
+  }
+  .container {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: nowrap;
+  }
+  fieldset {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 1rem 1.5rem 1.5rem;
+    width: 450px;
+    box-sizing: border-box;
+    position: relative;
+  }
+  legend {
+    font-weight: bold;
+    padding: 0 0.5rem;
+    color: #f26522;
+  }
+  label {
+    display: block;
+    margin-top: 1rem;
+    font-weight: bold;
+  }
+  select, input[type="number"] {
+    margin-top: 0.3rem;
+    padding: 0.3rem 0.5rem;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 1rem;
+  }
+  input[type="checkbox"] {
+    margin-right: 0.3rem;
+  }
+  .positions {
+    margin-top: 1rem;
+  }
+  .position-group {
+    margin-top: 1rem;
+  }
+  button {
+    margin-top: 0.6rem;
+    padding: 0.6rem;
+    width: 100%;
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    background-color: #f26522;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  button:hover {
+    background-color: #d9531e;
+  }
+  .total {
+    font-weight: bold;
+    margin-top: 1rem;
+    font-size: 1.3rem;
+    color: #f26522;
+    white-space: pre-line;
+  }
+  .position-group label {
+    font-weight: normal;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    cursor: pointer;
+    margin-top: 0.4rem;
+  }
+  .checkbox-qty {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .checkbox-qty input[type="number"] {
+    width: 60px;
+    font-size: 0.9rem;
+  }
+</style>
+</head>
+<body>
+
+<h1>Shop - Apex Stylebreaker</h1>
+
+<div class="container">
+
+  <!-- Tabelle 1: Textilien + Druckkosten -->
+  <fieldset id="tabelle1">
+    <legend>Textilien auswählen und Druckkosten</legend>
+
+    <label for="textilSelect">Textiltyp:</label>
+    <select id="textilSelect" required>
+      <option value="" disabled selected>-- Wähle Textil --</option>
+      <option value="4.30">Shirt - 4,30 €</option>
+      <option value="4.70">Shirt Premium - 4,70 €</option>
+      <option value="8.70">Polo men - 8,70 €</option>
+      <option value="8.70">Polo woman - 8,70 €</option>
+      <option value="6.80">Polo kids - 6,80 €</option>
+      <option value="6.80">Long Sleeve T-Shirts - 6,80 €</option>
+      <option value="11.80">Sweatshirts men - 11,80 €</option>
+      <option value="13.20">Sweatshirts woman - 13,20 €</option>
+      <option value="15.40">Hoodies - 15,40 €</option>
+      <option value="0">Kein Textil</option>
+      <option value="3.80">Warnweste - 3,80 €</option>
+    </select>
+
+    <label for="textilStueckzahl">Stückzahl Textil:</label>
+    <input type="number" id="textilStueckzahl" min="0" value="0" />
+
+    <fieldset style="margin-top:1rem;">
+      <legend>Druckkosten</legend>
+
+      <label for="druckGrundpreis">Grundpreis Druckart:</label>
+      <select id="druckGrundpreis" required>
+        <option value="" disabled selected>-- Wähle Druckart --</option>
+        <option value="9">Einfärbig - 9 €</option>
+        <option value="12">Fotodruck - 12 €</option>
+      </select>
+
+      <div class="positions">
+
+        <div class="position-group">
+          <h3>Vorne</h3>
+          <div class="checkbox-qty">
+            <input type="checkbox" id="frontOneColor" value="3.5" />
+            <label for="frontOneColor">Einfärbig (3,50 €)</label>
+            <input type="number" id="frontOneColorQty" min="0" value="0" />
+          </div>
+          <div class="checkbox-qty">
+            <input type="checkbox" id="frontPhotoPrint" value="4.5" />
+            <label for="frontPhotoPrint">Fotodruck (4,50 €)</label>
+            <input type="number" id="frontPhotoPrintQty" min="0" value="0" />
+          </div>
+        </div>
+
+        <div class="position-group">
+          <h3>Hinten</h3>
+          <div class="checkbox-qty">
+            <input type="checkbox" id="backOneColor" value="3.5" />
+            <label for="backOneColor">Einfärbig (3,50 €)</label>
+            <input type="number" id="backOneColorQty" min="0" value="0" />
+          </div>
+          <div class="checkbox-qty">
+            <input type="checkbox" id="backPhotoPrint" value="4.5" />
+            <label for="backPhotoPrint">Fotodruck (4,50 €)</label>
+            <input type="number" id="backPhotoPrintQty" min="0" value="0" />
+          </div>
+        </div>
+
+        <div class="position-group">
+          <h3>Ärmel links</h3>
+          <div class="checkbox-qty">
+            <input type="checkbox" id="leftSleeveOneColor" value="3.5" />
+            <label for="leftSleeveOneColor">Einfärbig (3,50 €)</label>
+            <input type="number" id="leftSleeveOneColorQty" min="0" value="0" />
+          </div>
+          <div class="checkbox-qty">
+            <input type="checkbox" id="leftSleevePhotoPrint" value="4.5" />
+            <label for="leftSleevePhotoPrint">Fotodruck (4,50 €)</label>
+            <input type="number" id="leftSleevePhotoPrintQty" min="0" value="0" />
+          </div>
+        </div>
+
+        <div class="position-group">
+          <h3>Ärmel rechts</h3>
+          <div class="checkbox-qty">
+            <input type="checkbox" id="rightSleeveOneColor" value="3.5" />
+            <label for="rightSleeveOneColor">Einfärbig (3,50 €)</label>
+            <input type="number" id="rightSleeveOneColorQty" min="0" value="0" />
+          </div>
+          <div class="checkbox-qty">
+            <input type="checkbox" id="rightSleevePhotoPrint" value="4.5" />
+            <label for="rightSleevePhotoPrint">Fotodruck (4,50 €)</label>
+            <input type="number" id="rightSleevePhotoPrintQty" min="0" value="0" />
+          </div>
+        </div>
+
+      </div>
+
+      <label for="stückzahlDruck">Stückzahl Druck:</label>
+      <input type="number" id="stückzahlDruck" min="0" value="0" />
+
+      <label for="rabatt">Rabatt % auf Druckkosten:</label>
+      <input type="number" id="rabatt" min="0" max="100" value="0" />
+    </fieldset>
+
+    <button type="button" id="berechnenBtn1">Berechnen</button>
+
+    <div class="total" id="ergebnis1"></div>
+  </fieldset>
+
+  <!-- Tabelle 2: DTF, Pressen, UV DTF -->
+  <fieldset id="tabelle2">
+    <legend>DTF, Pressen und UV DTF</legend>
+
+    <div class="position-group">
+      <label for="dtfPreis">DTF Preis / Stück (€):</label>
+      <input type="number" id="dtfPreis" min="0" step="0.01" value="0" />
+      <label for="dtfMenge">Stückzahl DTF:</label>
+      <input type="number" id="dtfMenge" min="0" value="0" />
+    </div>
+
+    <div class="position-group">
+      <label for="pressenMenge">Stückzahl Pressen:</label>
+      <input type="number" id="pressenMenge" min="0" value="0" />
+      <label>Pressen Preis fix: 7,50 €</label>
+    </div>
+
+    <div class="position-group">
+      <label for="uvdtfPreis">UV DTF Preis / Stück (€):</label>
+      <input type="number" id="uvdtfPreis" min="0" step="0.01" value="0" />
+      <label for="uvdtfMenge">Stückzahl UV DTF:</label>
+      <input type="number" id="uvdtfMenge" min="0" value="0" />
+    </div>
+
+    <label for="rabatt2">Rabatt % auf Gesamt:</label>
+    <input type="number" id="rabatt2" min="0" max="100" value="0" />
+
+    <button type="button" id="berechnenBtn2">Berechnen</button>
+
+    <div class="total" id="ergebnis2"></div>
+  </fieldset>
+
+</div>
+
+<script>
+  // Funktion Tabelle 1 Berechnung (unverändert, original)
+  document.getElementById("berechnenBtn1").addEventListener("click", function() {
+    const textilPreis = parseFloat(document.getElementById("textilSelect").value) || 0;
+    const textilStueckzahl = parseInt(document.getElementById("textilStueckzahl").value) || 0;
+
+    const grundpreisDruck = parseFloat(document.getElementById("druckGrundpreis").value) || 0;
+    const stueckzahlDruck = parseInt(document.getElementById("stückzahlDruck").value) || 0;
+
+    // Sammle Druckpositionen: Nur ausgewählte Positionen + Menge
+    function getPosKosten(checkboxId, qtyId) {
+      const cb = document.getElementById(checkboxId);
+      const qty = parseInt(document.getElementById(qtyId).value) || 0;
+      if(cb.checked && qty > 0) {
+        return parseFloat(cb.value) * qty;
+      }
+      return 0;
+    }
+
+    let druckKostenProDruck = grundpreisDruck;
+
+    // Summe aller Motive pro Druck (Vorne, Hinten, Ärmel links, Ärmel rechts)
+    druckKostenProDruck += getPosKosten("frontOneColor", "frontOneColorQty");
+    druckKostenProDruck += getPosKosten("frontPhotoPrint", "frontPhotoPrintQty");
+    druckKostenProDruck += getPosKosten("backOneColor", "backOneColorQty");
+    druckKostenProDruck += getPosKosten("backPhotoPrint", "backPhotoPrintQty");
+    druckKostenProDruck += getPosKosten("leftSleeveOneColor", "leftSleeveOneColorQty");
+    druckKostenProDruck += getPosKosten("leftSleevePhotoPrint", "leftSleevePhotoPrintQty");
+    druckKostenProDruck += getPosKosten("rightSleeveOneColor", "rightSleeveOneColorQty");
+    druckKostenProDruck += getPosKosten("rightSleevePhotoPrint", "rightSleevePhotoPrintQty");
+
+    // Pauschalen pro Druck (Hinten 5€, Ärmel links 4€, Ärmel rechts 4€) - pro Druck und nur wenn mindestens ein Motiv auf dieser Position ausgewählt
+    // Wir prüfen nur, ob mindestens eine Motive in der Position aktiv sind (egal wie viele Motive und Anzahl)
+    function pauschale(positionIds, pauschalbetrag) {
+      for(const id of positionIds) {
+        const cb = document.getElementById(id);
+        if(cb.checked) return pauschalbetrag;
+      }
+      return 0;
+    }
+
+    // Positionsgruppen mit Pauschalen
+    // Hinweis: Pauschalen pro Druck, also multipliziert mit stueckzahlDruck
+    let pauschalenSumme = 0;
+    pauschalenSumme += pauschale(["backOneColor", "backPhotoPrint"], 5);
+    pauschalenSumme += pauschale(["leftSleeveOneColor", "leftSleevePhotoPrint"], 4);
+    pauschalenSumme += pauschale(["rightSleeveOneColor", "rightSleevePhotoPrint"], 4);
+
+    druckKostenProDruck += pauschalenSumme;
+
+    // Gesamt Druckkosten
+    let gesamtDruckKosten = druckKostenProDruck * stueckzahlDruck;
+
+    // Rabatt auf Druckkosten
+    let rabatt = parseFloat(document.getElementById("rabatt").value) || 0;
+    if(rabatt > 0 && rabatt <= 100){
+      gesamtDruckKosten = gesamtDruckKosten * (1 - rabatt/100);
+    }
+
+    // Gesamtpreis inkl Textil
+    let gesamtPreis = (textilPreis * textilStueckzahl) + gesamtDruckKosten;
+
+    document.getElementById("ergebnis1").textContent =
+      `Gesamtpreis Textil + Druck: ${gesamtPreis.toFixed(2)} €`;
+  });
+
+  // Funktion Tabelle 2 Berechnung (angepasst)
+
+  document.getElementById("berechnenBtn2").addEventListener("click", function() {
+    const dtfPreis = parseFloat(document.getElementById("dtfPreis").value) || 0;
+    const dtfMenge = parseInt(document.getElementById("dtfMenge").value) || 0;
+
+    const pressenMenge = parseInt(document.getElementById("pressenMenge").value) || 0;
+    const pressenFixPreis = 7.50; // fix
+
+    const uvdtfPreis = parseFloat(document.getElementById("uvdtfPreis").value) || 0;
+    const uvdtfMenge = parseInt(document.getElementById("uvdtfMenge").value) || 0;
+
+    // Berechnung Gesamt ohne Rabatt
+    const dtfGesamt = dtfPreis * dtfMenge;
+    const pressenGesamt = pressenFixPreis * pressenMenge;
+    const uvdtfGesamt = uvdtfPreis * uvdtfMenge;
+
+    let summe = dtfGesamt + pressenGesamt + uvdtfGesamt;
+
+    // Rabatt auf Gesamt
+    let rabatt = parseFloat(document.getElementById("rabatt2").value) || 0;
+    if(rabatt > 0 && rabatt <= 100){
+      summe = summe * (1 - rabatt/100);
+    }
+
+    document.getElementById("ergebnis2").textContent =
+      `Gesamt DTF + Pressen + UV DTF (Rabatt berücksichtigt): ${summe.toFixed(2)} €`;
+  });
+
+</script>
+
+</body>
+</html>
