@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Textildruck Preisrechner</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(180deg, #e6e6e6, #ffffff);
+      padding: 2rem;
+      color: #111;
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+    input, select {
+      padding: 0.6rem;
+      margin-top: 0.3rem;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-family: 'Orbitron', sans-serif;
+      background-color: #fdfdfd;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .result {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: #ffffff;
+      border: 2px solid #f07f10;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      font-size: 1.4rem;
+      color: #f07f10;
+      text-align: center;
+    }
+    h1 {
+      color: #f07f10;
+      text-shadow: 1px 1px 2px #000;
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Preisrechner Textildruck</h1>
+
+  <label>Stückzahl:</label>
+  <input type="number" id="quantity" min="1" value="1">
+
+  <label>Textilart:</label>
+  <select id="textile">
+    <option value="3.49">T-Shirt Rundhals</option>
+    <option value="3.49">T-Shirt V-Ausschnitt</option>
+    <option value="6.49">Polo Shirt</option>
+    <option value="0">Eigenes Textil (kein Aufpreis)</option>
+  </select>
+
+  <label>Druckart:</label>
+  <select id="druckart">
+    <option value="flex">Flexfolien</option>
+    <option value="dtf">DTF Foto</option>
+  </select>
+
+  <label>Motivformat:</label>
+  <select id="format">
+    <option value="9x14">9 x 14 cm</option>
+    <option value="16x20">16,3 x 19,6 cm</option>
+    <option value="20x30">19,6 x 30 cm</option>
+    <option value="a3">DIN A3</option>
+    <option value="dtf">DTF Standard (19,8 x 27,8)</option>
+  </select>
+
+  <label>Zusätzliche Motive (Flex/DTF):</label>
+  <input type="number" id="additionalMotives" min="0" value="0">
+
+  <label>Zusätzliche Pressvorgänge (Rücken, Ärmel etc.):</label>
+  <input type="number" id="extraPress" min="0" value="0">
+
+  <div class="result" id="result">Gesamtpreis: 0,00 €</div>
+
+  <script>
+    const flexPrices = {
+      "9x14": [2.49, 2.29, 2.19, 1.89, 1.79, 1.69, 1.59],
+      "16x20": [3.59, 3.49, 2.89, 2.79, 2.69, 2.59, 2.49],
+      "20x30": [4.29, 4.19, 3.59, 3.49, 3.39, 3.29, 3.19]
+    };
+
+    const dtfStandard = [8.99, 6.99, 6.79, 6.59, 6.49, 5.19, 4.49, 3.99, 3.49, 2.99];
+    const dtfA3 = [12.79, 11.19, 10.69, 10.59, 10.49, 9.99, 8.99, 7.99, 6.99, 5.99];
+
+    const pressPrices = [7.99, 7.79, 7.49, 6.59, 5.99, 5.29];
+
+    function getStaffelpreis(arr, qty) {
+      if (qty >= 100) return arr[6] ?? arr[arr.length - 1];
+      if (qty >= 80) return arr[5] ?? arr[arr.length - 1];
+      if (qty >= 50) return arr[4] ?? arr[arr.length - 1];
+      if (qty >= 30) return arr[3] ?? arr[arr.length - 1];
+      if (qty >= 10) return arr[2] ?? arr[arr.length - 1];
+      if (qty >= 5)  return arr[1] ?? arr[arr.length - 1];
+      return arr[0];
+    }
+
+    function calculate() {
+      const qty = parseInt(document.getElementById('quantity').value);
+      const textilePrice = parseFloat(document.getElementById('textile').value);
+      const druckart = document.getElementById('druckart').value;
+      const format = document.getElementById('format').value;
+      const motives = parseInt(document.getElementById('additionalMotives').value);
+      const extras = parseInt(document.getElementById('extraPress').value);
+
+      let pressBase = getStaffelpreis(pressPrices, qty);
+      let pressTotal = pressBase + (extras * 4.99);
+
+      let druckPreis = 0;
+      if (druckart === 'flex') {
+        druckPreis = getStaffelpreis(flexPrices[format], qty);
+      } else {
+        const arr = (format === 'a3') ? dtfA3 : dtfStandard;
+        druckPreis = getStaffelpreis(arr, qty);
+      }
+
+      const total = (textilePrice + pressTotal + (druckPreis * (1 + motives))) * qty;
+      document.getElementById('result').innerText = `Gesamtpreis: ${total.toFixed(2)} €`;
+    }
+
+    document.querySelectorAll('input, select').forEach(el => el.addEventListener('input', calculate));
+    calculate();
+  </script>
+</body>
+</html>
